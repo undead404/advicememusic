@@ -1,7 +1,7 @@
 "use strict";
 // ARTIST_GETINFO_URL = 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist={artist}&api_key={api_key}&format=json'
 window.LASTFM_API_KEY = '053c2f4d20bda39f8e353be6e277d6d0';
-window.LASTFM_API_ROOT = 'http://ws.audioscrobbler.com/2.0/'
+window.LASTFM_API_ROOT = 'https://ws.audioscrobbler.com/2.0/'
 
 function flush(){
     $('#magic-results').hide();
@@ -31,8 +31,8 @@ function showArtist(artist_name){
             'method': 'artist.getinfo'
         },)
         .pipe(function(response){
-            console.log(encodeURIComponent(artist_name));
-            console.log(response);
+            // console.log(encodeURIComponent(artist_name));
+            // console.log(response);
             $('#artist-image').attr('src', _.find(response['artist']['image'], function(image_data){
                 return image_data['size'] === 'extralarge';
             })['#text']);
@@ -40,7 +40,7 @@ function showArtist(artist_name){
             $('#lastfm-url').attr('href', response['artist']['url']);
         })
         .pipe(function(){
-            console.log('success');
+            // console.log('success');
             $('#magic-results').show();
             $('#go-magic').click();
         });
