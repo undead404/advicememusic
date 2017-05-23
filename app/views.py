@@ -10,3 +10,7 @@ def index():
 @app.route('/get')
 def get_artist():
     return json.dumps(get_cult_artist())
+
+@app.route('/static/<path:path>')
+def get_static(path):
+    return send_from_directory('static', path)
