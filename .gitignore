@@ -160,4 +160,5 @@ typings/
 # dotenv environment variables file
 .env
 
-*/packed.*
+app/static/js/packed.js
+app/static/css/packed.css
