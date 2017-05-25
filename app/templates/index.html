@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html v-bind:lang="lang" lang="en">
+<html lang="en">
 
 <head>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Exalted music for exalted people.">
+    <meta name="author" content="undead404">
 
-    <title>Advice Me Music</title>
+    <title>Exalted Music</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}" />
     {% assets "home_css" %}
             <link rel="stylesheet" href="{{ ASSET_URL }}" />
@@ -67,9 +67,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
-                        <h1 class="brand-heading">Advice Me Music</h1>
-                        <p class="intro-text">Push a button and get a valuable, favourable advice.</p>
-                        <a class="btn btn-large" id="magic-button" style="font-size: 4em;" v-on:click="requestMagic">
+                        <h1 class="brand-heading">Exalted Music</h1>
+                        <p class="intro-text">Push the magic button and listen to <span class="label label-success">100%</span> cult music.</p>
+                        <a class="btn btn-large" id="magic-button" style="font-size: 4em;" v-on:click="requestMagic" v-disabled="artist && !artist.popularity">
                             <i class="fa fa-magic animated"></i>MAGIC<i class="fa fa-magic animated"></i>
                         </a>
                     </div>
@@ -82,8 +82,8 @@
     <section id="about" class="container content-section text-center">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
-                <h2>About "Advice Me Music"</h2>
-                <p>"Advice Me Music" is a small web application providing pseudorandom musical artist with probabilities according to artists' cultural valuabilities.</p>
+                <h2>About "Exalted Music"</h2>
+                <p>"Exalted Music" is a small web application providing pseudorandom musical artist with probabilities according to artists' cultural valuabilities.</p>
             </div>
         </div>
     </section>
