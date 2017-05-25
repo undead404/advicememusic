@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Годная музыка для достойных людей.">
+    <meta name="author" content="undead404">
+    <link rel="alternate" hreflang="en" href="/en" />
+
+    <title>Годная музыка</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}" />
+    {% assets "home_css" %}
+            <link rel="stylesheet" href="{{ ASSET_URL }}" />
+    {% endassets %}
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top"><div id="app">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    Меню <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">
+                    <i class="fa fa-play-circle"></i>Годная <span class="light">музыка</span>
+                </a>
+                <a class="navbar-brand" href="/en">en</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#about">О приложении</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#magic-results" id="go-magic">Магия</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#contact">Связь</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Intro Header -->
+    <header class="intro">
+        <div class="intro-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <h1 class="brand-heading">Годная музыка</h1>
+                        <p class="intro-text">Жми на кнопку и получай <span class="badge badge-success">100%</span> культовое музло.</p>
+                        <a class="btn btn-large" id="magic-button" v-on:click="requestMagic" v-bind:disabled="artist && !artist.popularity">
+                            <i class="fa fa-magic animated"></i>МАГИЯ<i class="fa fa-magic animated"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="container content-section text-center">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>О "Возвышенной музыке"</h2>
+                <p>"Возвышенная музыка" - маленькое веб-приложение, советующее псевдослучайного исполнителя на основании вероятностей, связанных с культурной значимостью исполнителей.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->{% raw %}
+    <section id="magic-results" class="content-section text-center" v-if="artist.popularity">
+        <div class="magic-results-section">
+            <div class="container">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <artist-card v-bind:artist="artist"></artist-card>
+                </div>
+            </div>
+        </div>
+    </section>{% endraw %}
+
+    <!-- Contact Section -->
+    <section id="contact" class="container content-section text-center">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>Связь с undead404</h2>
+                <p>Пишите!</p>
+                <p><a href="mailto:brute18@gmail.com">brute18@gmail.com</a>
+                </p>
+                <ul class="list-inline banner-social-buttons">
+                    <li>
+                        <a href="https://twitter.com/Brute18" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/undead404" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+                    </li>
+                    <li>
+                        <a href="https://facebook.com/vitaliy.seeker" class="btn btn-default btn-lg"><i class="fa fa-facebook fa-fw"></i> <span class="network-name">FaceBook</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p>Copyright &copy; undead404 2017</p>
+        </div>
+    </footer>
+</div>
+    {% assets "ru_js" %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+</body>
+
+</html>
