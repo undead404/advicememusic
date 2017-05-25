@@ -101,8 +101,8 @@ app = new Vue({
         },
         showLastfmData: (response) => {
             // console.log(response);
-            window.image_data = response.artist.image;
-            console.log(response.artist.image);
+            // window.image_data = response.artist.image;
+            // console.log(response.artist.image);
             app.artist.imageUrl = _.find(response.artist.image, (image_data) => {
                 return image_data.size === "extralarge";
             })["#text"];

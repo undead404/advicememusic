@@ -10,7 +10,7 @@ bundles = {
         'vendor/bootstrap/js/bootstrap.min.js',
         'js/lodash.min.js',
         'js/vue.js',
-        'js/en.js',
+        'js/en_transpiled.js',
         output='js/packed_en.js',
         filters='jsmin'),
 
@@ -30,7 +30,7 @@ bundles = {
         'vendor/bootstrap/js/bootstrap.min.js',
         'js/lodash.min.js',
         'js/vue.js',
-        'js/ru.js',
+        'js/ru_transpiled.js',
         output='js/packed_ru.js',
         filters='jsmin'),
 }
