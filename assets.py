@@ -5,10 +5,11 @@ bundles = {
 
     'home_js': Bundle(
         'vendor/jquery/jquery.min.js',
-        'vendor/bootstrap/js/bootstrap.min.js',
         'js/jquery.easing.min.js',
         'js/grayscale.js',
+        'vendor/bootstrap/js/bootstrap.min.js',
         'js/lodash.min.js',
+        'js/vue.js',
         'js/main.js',
         output='js/packed.js',
         filters='jsmin'),

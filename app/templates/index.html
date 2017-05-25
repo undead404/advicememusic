@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html v-bind:lang="lang" lang="en">
 
 <head>
 
@@ -24,7 +24,7 @@
 
 </head>
 
-<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top"><div id="app">
 
     <!-- Navigation -->
     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
@@ -69,7 +69,7 @@
                     <div class="col-md-8 col-md-offset-2">
                         <h1 class="brand-heading">Advice Me Music</h1>
                         <p class="intro-text">Push a button and get a valuable, favourable advice.</p>
-                        <a class="btn btn-large" id="magic-button" style="font-size: 4em;">
+                        <a class="btn btn-large" id="magic-button" style="font-size: 4em;" v-on:click="requestMagic">
                             <i class="fa fa-magic animated"></i>MAGIC<i class="fa fa-magic animated"></i>
                         </a>
                     </div>
@@ -88,22 +88,23 @@
         </div>
     </section>
 
-    <!-- Download Section -->
-    <section id="magic-results" class="content-section text-center" style="display:none; padding-top: 0px;">
+    <!-- Download Section -->{% raw %}
+    <section id="magic-results" class="content-section text-center" style="padding-top: 0px;" v-if="artist.popularity">
         <div class="magic-results-section">
             <div class="container">
                 <div class="col-lg-8 col-lg-offset-2">
-                    <img class="img-circle" id="artist-image"/>
-                    <h2 id="artist-name">ARTIST_NAME</h2>
-                    <h4 id="artist-genres"></h4>
-                    <p id="artist-description">DESCRIPTION</p>
-                    <a href="#page-top" class="btn btn-large page-scroll" id="magic-button" style="font-size: 3em;">
-                            <i class="fa fa-chevron-up animated"></i>TRY AGAIN<i class="fa fa-chevron-up animated"></i>
-                        </a>
+                    <!--<img class="img-circle" id="artist-image" v-bind:src="artist.imageUrl"/>
+                    <h2 id="artist-name" v-html="artist.name"></h2>
+                    <h4 id="artist-tags">{{artist.tags}} ({{artist.popularity}} fans).</h4>
+                    <p id="artist-description" v-html="artist.description"></p>
+                    <a href="#page-top" class="btn btn-large page-scroll" id="try-again-button" style="font-size: 2.5em;">
+                        <i class="fa fa-chevron-up animated"></i>TRY AGAIN<i class="fa fa-chevron-up animated"></i>
+                    </a>-->
+                    <artist-card v-bind:artist="artist"></artist-card>
                 </div>
             </div>
         </div>
-    </section>
+    </section>{% endraw %}
 
     <!-- Contact Section -->
     <section id="contact" class="container content-section text-center">
@@ -134,10 +135,10 @@
             <p>Copyright &copy; undead404 2017</p>
         </div>
     </footer>
-
+</div>
     {% assets "home_js" %}
-            <script type="text/javascript" src="{{ ASSET_URL }}"></script>
-        {% endassets %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
 </body>
 
 </html>

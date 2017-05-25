@@ -1,51 +1,70 @@
 "use strict";
-// ARTIST_GETINFO_URL = "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist={artist}&api_key={api_key}&format=json"
-window.LASTFM_API_KEY = "053c2f4d20bda39f8e353be6e277d6d0";
-window.LASTFM_API_ROOT = "https://ws.audioscrobbler.com/2.0/";
-
-function flush() {
-    $("#magic-results").hide();
+var app;
+class Artist{
+    constructor(){
+        this.description = "[unknown] is a standard artist name used at MusicBrainz for indicating where an artist name is lacking or not provided. <a href=\"https://www.last.fm/music/%5Bunknown%5D\">Read more on Last.fm</a>";
+        this.imageUrl = "https://lastfm-img2.akamaized.net/i/u/300x300/e833f8859fc5e1cc230d68c6c269dd39.png";
+        this.tags = "all";
+        this.name = "[unknown]";
+        this.popularity = undefined;
+    }
+    
 }
 
-function request_magic(event) {
-    flush();
-    console.log("magic...");
-    event.preventDefault();
-    return $.getJSON("/get")
-        .pipe(function (response) {
-            // console.log(response);
-            // window.response = response;
-            $("#artist-name").text(response["name"]);
-            $("#artist-genres").text(response["tags"] + ", " + response["popularity"] + " fans.");
-            return window.showArtist(response["name"]);
-        });
-}
+Vue.component("artist-card", {
+    data: () => {
+        return {};
+    },
+    props: ['artist'],
+    template: '<div><img class="img-circle" id="artist-image" v-bind:src="artist.imageUrl"/><h2 id="artist-name" v-html="artist.name"></h2><h4 id="artist-tags">{{artist.tags}} ({{artist.popularity}} fans).</h4><p id="artist-description" v-html="artist.description"></p><a href="#page-top" class="btn btn-large page-scroll" id="try-again-button" style="font-size: 2.5em;"><i class="fa fa-chevron-up animated"></i>TRY AGAIN<i class="fa fa-chevron-up animated"></i></a></div>'
+});
 
-function showArtist(artist_name) {
-    console.log(artist_name);
-    return $.getJSON(window.LASTFM_API_ROOT, {
-        "api_key": window.LASTFM_API_KEY,
-        "autocorrect": 1,
-        "artist": artist_name,
-        "format": "json",
-        "method": "artist.getinfo"
-        })
-        .pipe(function (response) {
-            // console.log(encodeURIComponent(artist_name));
-            // console.log(response);
-            $("#artist-image").attr("src", _.find(response["artist"]["image"], function (image_data) {
-                return image_data["size"] === "extralarge";
-            })["#text"]);
-            $("#artist-description").html(response["artist"]["bio"]["summary"]);
-            $("#lastfm-url").attr("href", response["artist"]["url"]);
-        })
-        .pipe(function () {
-            // console.log("success");
-            $("#magic-results").show();
+app = new Vue({
+    el: "#app",
+    data: {
+        artist: new Artist(),
+        lang: "en",
+        LASTFM_API_KEY: "053c2f4d20bda39f8e353be6e277d6d0",
+        LASTFM_API_ROOT: "//ws.audioscrobbler.com/2.0/"
+    },
+    methods: {
+        requestLastfm: () => {
+            return fetch(app.LASTFM_API_ROOT + "?api_key=" +
+                app.LASTFM_API_KEY + "&autocorrect=1&artist=" +
+                app.artist.name + "&format=json&method=artist.getinfo");
+        },
+        requestMagic: () => {
+            app.artist = new Artist();
+            console.log("magic...");
+            return fetch("/get")
+                .then(response => {
+                    return response.json();
+                })
+                .then(app.showBasicData.bind(app))
+                //.then(app.showBasicData)
+                .then(app.requestLastfm.bind(app))
+                .then(response => {
+                    return response.json();
+                })
+                .then(app.showLastfmData.bind(app))
+                .then(app.scrollToResults);
+        },
+        scrollToResults: () => {
             $("#go-magic").click();
-        });
-}
-
-$(function () {
-    $("#magic-button").click(request_magic);
+        },
+        showBasicData: (response) => {
+            console.log(response);
+            app.artist.name = response.name;
+            app.artist.tags = response.tags;
+            app.artist.popularity = response.popularity;
+        },
+        showLastfmData: (response) => {
+            console.log(response);
+            app.artist.imageUrl = _.find(response.artist.image, (image_data) => {
+                return image_data.size === "extralarge";
+            })["#text"];
+            console.log(app.artist.imageUrl);
+            app.artist.description = response.artist.bio.summary;
+        }
+    }
 });
