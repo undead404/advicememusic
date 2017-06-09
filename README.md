@@ -1,3 +1,3 @@
-# advicememusic
+# Exalted Music
 
-Available [https://advicememusic.herokuapp.com](here).
+Available [https://exmusic.herokuapp.com].
