@@ -25,6 +25,7 @@ class Artist{
             return "https://www.youtube.com/results?search_query=" + this.getSearchQuery();
         };
         this.imageUrl = "https://lastfm-img2.akamaized.net/i/u/300x300/e833f8859fc5e1cc230d68c6c269dd39.png";
+        this.isBeingLoaded = false;
         this.tags = "all";
         this.name = "[unknown]";
         this.popularity = undefined;
@@ -41,17 +42,17 @@ Vue.component("artist-card", {
         'v-bind:src="artist.imageUrl"/><h2 id="artist-name" ' +
         'v-html="artist.name"></h2><h4 id="artist-tags">{{artist.tags}} ' +
         '({{artist.popularity}} fans).</h4><p>' +
-        '<a class="btn btn-info btn-small" target="_blank" ' +
+        '<a class="btn btn-default btn-default tn-small" target="_blank" ' +
         'v-bind:href="artist.getBandcampLink()">Bandcamp</a>' +
-        '<a class="btn btn-info btn-small" target="_blank" ' +
+        '<a class="btn btn-default btn-small" target="_blank" ' +
         'v-bind:href="artist.getIncustunesLink()">IncusTunes</a>' +
-        '<a class="btn btn-info btn-small" target="_blank" ' +
+        '<a class="btn btn-default btn-small" target="_blank" ' +
         'v-bind:href="artist.getMyspaceLink()">MySpace</a>' +
-        '<a class="btn btn-info btn-small" target="_blank" ' +
+        '<a class="btn btn-default btn-small" target="_blank" ' +
         'v-bind:href="artist.getNapsterLink()">Napster</a>' +
-        '<a class="btn btn-info btn-small" target="_blank" ' +
+        '<a class="btn btn-default btn-small" target="_blank" ' +
         'v-bind:href="artist.getSoundcloudLink()">Soundcloud</a>' +
-        '<a class="btn btn-info btn-small" target="_blank" ' +
+        '<a class="btn btn-default btn-small" target="_blank" ' +
         'v-bind:href="artist.getYoutubeLink()">YouTube</a>' +
         '</p><p id="artist-description" v-html="artist.description">' +
         '</p><a href="#page-top" class="btn btn-large page-scroll" ' +
@@ -76,6 +77,7 @@ app = new Vue({
         },
         requestMagic: () => {
             app.artist = new Artist();
+            app.artist.isBeingLoaded = true;
             // console.log("magic...");
             return fetch("/get")
                 .then(response => {
@@ -108,6 +110,7 @@ app = new Vue({
             })["#text"];
             // console.log(app.artist.imageUrl);
             app.artist.description = response.artist.bio.summary;
+            app.artist.isBeingLoaded = false;
         }
     }
 });
